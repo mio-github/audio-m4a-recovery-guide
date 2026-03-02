@@ -1,0 +1,88 @@
+あなたは、端末コマンドを実行できるエージェントです。以下の要件を厳守して、破損M4Aの復旧作業を最初から最後まで実行してください。
+
+【目的】
+- 対象フォルダ内の破損 `.m4a` を可能な限り復旧する。
+- 元データを絶対に壊さない。
+- 作業結果を再現可能な形でレポート化する。
+
+【入力パラメータ】
+- TARGET_DIR: <対象フォルダ絶対パス>
+- GOOD_SAMPLE: <正常参照m4aファイル名>
+- WORK_PREFIX: _work_copy_
+
+【最重要ルール】
+1) 元ファイルを上書きしない
+2) 最初に作業コピーを作る
+3) 作業は作業コピー内のみで行う
+4) 既存の復旧ファイルは削除しない
+5) すべての試行ログを残す
+
+【実施タスク】
+
+Task 1: 作業コピー作成
+- TARGET_DIR配下に `_work_copy_YYYYMMDD_HHMMSS` を作成
+- `rsync -a --exclude '_work_copy_*'` で複製
+- 以降はそのコピーをWORK_DIRとして扱う
+
+Task 2: 全件診断
+- WORK_DIR内の `.m4a` 全件に対して `ffprobe` 実行
+- `moov atom not found` を含むファイルを「破損候補」として抽出
+- 一覧を `recovery_scan_report.txt` に保存
+
+Task 3: 参照ファイル確認
+- WORK_DIR内の GOOD_SAMPLE を `ffprobe` して codec/profile/sample_rate/channels を記録
+
+Task 4: 復旧実行（順番厳守）
+- 各破損候補について以下を実行
+  A) ffmpeg raw AAC解釈（copy/decode）
+     - `<base>_salvage_copy.m4a`
+     - `<base>_salvage_decode.m4a`
+  B) UTF-8誤変換逆変換候補生成
+     - `<base>_utf8fix.m4a`
+     - そのファイルに対して A) を再実行
+  C) untrunc（参照: GOOD_SAMPLE）
+     - default: `<base>_UNTRUNC.m4a`
+     - -M: `<base>_UNTRUNC_M.m4a`
+     - ログ: `<base>_untrunc.log`
+- untruncはDockerで実行（利用可能なら）
+
+Task 5: 候補評価
+- 生成された候補ファイルを全て評価
+- 評価基準:
+  - ffprobe可読
+  - ffmpegで先頭30秒デコード成功
+  - ffmpegで中盤20秒デコード成功（可能な範囲）
+  - durationが0や極小でない
+- 各元ファイルごとに最良1件を選定して
+  - `<base>_RECOVERED_FINAL.m4a`
+  として保存
+
+Task 6: レポート生成
+- `RECOVERY_REPORT_FINAL.txt` を作成し、以下を記載
+  - 元ファイル名
+  - 破損判定結果
+  - 試した手法
+  - 生成候補
+  - 最終採用ファイル
+  - duration / codec / sample_rate / channels
+  - 備考（部分復旧・不可など）
+
+Task 7: 公開用ドキュメント整備（匿名化）
+- 実名、実パス、固有案件名を含まないこと
+- 公開用ガイド `RECOVERY_BEST_PRACTICES.md` を更新
+- 例示はプレースホルダ形式 (`<WORK_ROOT>`, `<GOOD_SAMPLE>.m4a` など)
+
+Task 8: 最終出力
+- 最後に以下を簡潔に表示
+  1) WORK_DIR
+  2) 最終復旧ファイル一覧
+  3) 主要レポートファイル一覧
+  4) 未解決ファイル（あれば）
+
+【禁止事項】
+- 元ファイル上書き
+- 既存成果物削除
+- 破壊的git操作
+- 実名/実パスの公開用文書への記載
+
+この指示に従って、途中で止まらず最後まで実行してください。
