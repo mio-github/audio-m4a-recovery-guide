@@ -1,4 +1,4 @@
-# Audio M4A Recovery Best Practices (Public, Privacy-Safe) / 音声M4A復旧ベストプラクティス（公開・匿名化版）
+# Audio M4A Recovery Best Practices / 音声M4A復旧ベストプラクティス
 
 ## Scope / 対象
 - EN: Safe, repeatable recovery workflow for broken `.m4a` files.
