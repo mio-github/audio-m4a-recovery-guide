@@ -1,0 +1,24 @@
+NotebookLMに音声をアップロードできるように、このディレクトリ内の「再生可能な音声ファイル」を分割してください。
+
+要件:
+1) 元ファイルは絶対に上書きしない。
+2) 出力先は `notebooklm_splits_ready_<YYYYMMDD_HHMMSS>/` とする。
+3) 各チャンクは 200MB 未満（安全側として 180MB 目安）にする。
+4) チャンク間に 10〜15秒のオーバーラップを入れる（推奨 12 秒）。
+5) 破損して `ffprobe` で読めないファイルは分割せず、`skipped_unreadable.tsv` に理由を記録する。
+6) 再生可能判定は `ffprobe` 成功で行う。
+7) 分割は可能な限り再エンコードなし（`-c copy`）で行う。
+8) すべての結果を `manifest.tsv` に記録する（source, chunk, start_sec, duration_sec, bytes, path）。
+9) 処理後に 200MB 超ファイルが1つもないことを検証する。
+10) 最後に、アップロード順にファイル一覧を出力する。
+
+推奨コマンド方針:
+- 利用ツール: `ffprobe`, `ffmpeg`
+- まず候補ファイルを列挙し、`ffprobe` で可読性チェック
+- bitrate から概算して segment 秒数を算出
+- `ffmpeg -ss <start> -t <len> -i <src> -c copy -movflags +faststart <out>`
+- 次チャンク開始時刻は `start + segment - overlap`
+
+補足:
+- NotebookLM用なので「上限ぎりぎり」より「確実に200MB未満」を優先する。
+- 長時間ファイルでは中盤チャンクの再生可否も抜き取り確認する。

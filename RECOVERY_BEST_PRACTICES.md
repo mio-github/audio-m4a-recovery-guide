@@ -118,6 +118,22 @@ If untrunc fails or output is tiny/invalid:
 - Continue until all files are either partially recovered or clearly marked unrecoverable.
 ```
 
+### Prompt C: NotebookLM upload split / NotebookLMアップロード用分割
+```text
+Split playable audio files for NotebookLM upload.
+Requirements:
+1) Never overwrite originals.
+2) Output into notebooklm_splits_ready_<timestamp>/.
+3) Keep each chunk under 200MB (target ~180MB for safety).
+4) Add 10-15 seconds overlap between adjacent chunks (recommended 12s).
+5) Skip unreadable files and record them in skipped_unreadable.tsv.
+6) Use ffprobe for readability checks.
+7) Prefer stream copy (-c copy) to avoid quality loss and speed up.
+8) Write manifest.tsv with source, chunk, start_sec, duration_sec, bytes, path.
+9) Verify that no chunk exceeds 200MB.
+10) Print upload order list at the end.
+```
+
 ## Public Repo Checklist / 公開前チェックリスト
 - [ ] No personal names in filenames or examples / 実名を含まない
 - [ ] No real absolute paths / 実絶対パスを含まない

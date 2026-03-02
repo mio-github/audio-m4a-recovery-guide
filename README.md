@@ -4,8 +4,8 @@ Public, privacy-safe guide for recovering broken `.m4a` files with a reproducibl
 
 ## What this repo contains
 - `RECOVERY_BEST_PRACTICES.md`: full bilingual (EN/JA) best-practice guide
-- `NOTE_ARTICLE_EN_JA.md`: ready-to-publish Note article draft
 - `prompts/`: reusable LLM prompt templates (CLI-agnostic)
+- `prompts/llm_notebooklm_split_prompt_ja.txt`: NotebookLM upload split prompt (<=200MB + overlap)
 
 ## Key principles
 1. Never overwrite originals.
