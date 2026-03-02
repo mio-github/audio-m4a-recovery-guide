@@ -1,0 +1,6 @@
+If untrunc fails or output is tiny/invalid:
+- Try a different known-good reference.
+- Try using a previously recovered file as reference.
+- Always keep logs per attempt.
+- Reject 0-byte or unreadable outputs.
+- Continue until all files are either partially recovered or clearly marked unrecoverable.

@@ -1,0 +1,10 @@
+Recover all broken .m4a files in this directory.
+Requirements:
+1) Create _work_copy_<timestamp> first and operate only there.
+2) Never overwrite originals.
+3) Diagnose every file with ffprobe and save a summary.
+4) Use a known-good reference file and run untrunc in both default and -M modes.
+5) Save outputs as new files (e.g., *_RECOVERED_UNTRUNC.m4a).
+6) Validate head and middle decode with ffmpeg.
+7) Keep existing recovered files and all logs.
+8) Produce a final report table: original, candidate outputs, duration, codec, selected best.
