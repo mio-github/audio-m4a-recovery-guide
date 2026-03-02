@@ -10,10 +10,10 @@ Highlights:
 - Works with any LLM CLI that can run terminal commands.
 
 Repository and files:
-- README: <REPO_URL>/blob/main/README.md
-- Full guide: <REPO_URL>/blob/main/RECOVERY_BEST_PRACTICES.md
-- Main prompt: <REPO_URL>/blob/main/prompts/llm_recovery_main_prompt.txt
-- Fallback prompt: <REPO_URL>/blob/main/prompts/llm_recovery_fallback_prompt.txt
+- README: https://github.com/mio-github/audio-m4a-recovery-guide/blob/main/README.md
+- Full guide: https://github.com/mio-github/audio-m4a-recovery-guide/blob/main/RECOVERY_BEST_PRACTICES.md
+- Main prompt: https://github.com/mio-github/audio-m4a-recovery-guide/blob/main/prompts/llm_recovery_main_prompt.txt
+- Fallback prompt: https://github.com/mio-github/audio-m4a-recovery-guide/blob/main/prompts/llm_recovery_fallback_prompt.txt
 
 If you handle media recovery in teams, this helps standardize quality and reduce accidental data loss.
 
@@ -27,9 +27,9 @@ If you handle media recovery in teams, this helps standardize quality and reduce
 - 端末コマンド実行ができるLLM CLIなら流用可能
 
 リンク:
-- README: <REPO_URL>/blob/main/README.md
-- 詳細ガイド: <REPO_URL>/blob/main/RECOVERY_BEST_PRACTICES.md
-- メインプロンプト: <REPO_URL>/blob/main/prompts/llm_recovery_main_prompt.txt
-- 失敗時プロンプト: <REPO_URL>/blob/main/prompts/llm_recovery_fallback_prompt.txt
+- README: https://github.com/mio-github/audio-m4a-recovery-guide/blob/main/README.md
+- 詳細ガイド: https://github.com/mio-github/audio-m4a-recovery-guide/blob/main/RECOVERY_BEST_PRACTICES.md
+- メインプロンプト: https://github.com/mio-github/audio-m4a-recovery-guide/blob/main/prompts/llm_recovery_main_prompt.txt
+- 失敗時プロンプト: https://github.com/mio-github/audio-m4a-recovery-guide/blob/main/prompts/llm_recovery_fallback_prompt.txt
 
 チームで復旧品質を揃えたいときに使える内容です。
